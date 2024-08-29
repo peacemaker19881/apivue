@@ -1,21 +1,35 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api/students';
+const API_URL = 'http://localhost:3000/api/students/';
 
 export default {
-  createStudent(student) {
-    return axios.post(API_URL, student);
-  },
   getAllStudents() {
-    return axios.get(API_URL);
+    return axios.get(API_URL, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
   },
-  getStudentById(id) {
-    return axios.get(`${API_URL}/${id}`);
+
+  getStudent(id) {
+    return axios.get(API_URL + id, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
   },
-  updateStudent(id, student) {
-    return axios.put(`${API_URL}/${id}`, student);
+
+  createStudent(studentData) {
+    return axios.post(API_URL, studentData, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
   },
+
+  updateStudent(id, studentData) {
+    return axios.put(API_URL + id, studentData, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
+  },
+
   deleteStudent(id) {
-    return axios.delete(`${API_URL}/${id}`);
+    return axios.delete(API_URL + id, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    });
   }
 };
